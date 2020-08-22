@@ -9,10 +9,20 @@ spring:
           uri: lb://order-food-service
           predicates:
             - Path=/orders/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: order-food-service
+                fallbackuri: forward:/orderFallBack
         - id: payment-service
           uri: lb://payment-service
           predicates:
             - Path=/payments/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: payment-service
+                fallbackuri: forward:/paymentFallBack
 
 server:
   port: 8081
@@ -27,3 +37,18 @@ eureka:
     register-with-eureka: true
 
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+
+#se demorar mais de 5s pra o serviço responder, entao ativa o fallback
