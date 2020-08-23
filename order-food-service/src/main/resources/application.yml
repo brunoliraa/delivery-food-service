@@ -1,7 +1,10 @@
 server:
-  port: 8081
+  port: 8084
 
 spring:
+  application:
+    name: order-food-service
+
   datasource:
     url: jdbc:postgresql://localhost:5432/order-food
     username: postgres
@@ -10,5 +13,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+logging:
+  file:
+    path: /home/bruno/logs/orderfood.log
+
 
 

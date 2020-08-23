@@ -1,25 +1,35 @@
 package com.br.orderfoodservice.controller;
 
+import com.br.orderfoodservice.dto.PaymentRequest;
+import com.br.orderfoodservice.dto.TransactionRequest;
+import com.br.orderfoodservice.dto.TransactionResponse;
 import com.br.orderfoodservice.model.Order;
 import com.br.orderfoodservice.service.OrderService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.PostConstruct;
 
 @RestController
-@RequestMapping("/api/v1/orders")
+@RequestMapping("/orders")
 @AllArgsConstructor
-public class OrderControlelr {
+public class OrderController {
 
     private final OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<Order> save(@RequestBody Order order){
-        return orderService.doOrder(order);
+    public ResponseEntity<TransactionResponse> save(@RequestBody TransactionRequest transactionRequest){
+        return orderService.doOrder(transactionRequest);
     }
+
+    @GetMapping
+    public String helloworld(){
+        return "hello world spring cloud";
+    }
+
 
 
 }
