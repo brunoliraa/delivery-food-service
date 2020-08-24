@@ -1,1 +1,10 @@
+server:
+  port: 8086
 
+spring:
+  application:
+    name: notification-email
+
+logging:
+  file:
+    path: /home/bruno/logs/orderfood.log
