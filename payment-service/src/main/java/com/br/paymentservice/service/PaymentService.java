@@ -27,15 +27,4 @@ public class PaymentService {
     }
 
 
-//    public String paymentProcessing(){
-//        //api should be 3rd party payment gateway (paypal,paytm...)
-//        return new Random().nextBoolean()?"success":"false";
-//    }
-//
-//
-//    public Payment findPaymentHistoryByOrderId(int orderId) {
-//        Payment payment=repository.findByOrderId(orderId);
-//        logger.info("paymentService findPaymentHistoryByOrderId : {}",new ObjectMapper().writeValueAsString(payment));
-//        return payment ;
-//    }
 }
