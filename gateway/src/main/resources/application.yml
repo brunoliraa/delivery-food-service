@@ -23,6 +23,15 @@ spring:
               args:
                 name: payment-service
                 fallbackuri: forward:/paymentFallBack
+        - id: notification-email-service
+          uri: lb://notification-email-service
+          predicates:
+            - Path=/emails/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: notification-email-service
+                fallbackuri: forward:/notification-emailFallback
 
 server:
   port: 8081
