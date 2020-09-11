@@ -19,6 +19,6 @@ public class Item {
     private Long id;
     private String name;
     private BigDecimal price;
-    private int amout;
+    private int quantity;
 
 }
