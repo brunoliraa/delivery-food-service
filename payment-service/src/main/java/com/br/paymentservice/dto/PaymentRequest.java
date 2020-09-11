@@ -15,5 +15,5 @@ public class PaymentRequest {
     private String paymentStatus;
     private String transactionId;
     private Long orderId;
-    private BigDecimal total;
+    private BigDecimal amout;
 }

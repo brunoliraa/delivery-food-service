@@ -1,11 +1,13 @@
 package com.br.paymentservice.service;
 
 import com.br.paymentservice.dto.TransactionStatus;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
+@AllArgsConstructor
 public class ClientService {
 
     private final RestTemplate restTemplate;

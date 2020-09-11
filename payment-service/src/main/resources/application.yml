@@ -12,6 +12,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+  rabbitmq:
+    host: localhost
+    port: 5672
 
 
 logging:
