@@ -6,7 +6,9 @@ import com.br.orderfoodservice.dto.TransactionResponse;
 import com.br.orderfoodservice.model.Order;
 import com.br.orderfoodservice.repository.OrderRepository;
 import lombok.AllArgsConstructor;
+
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Lazy;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
 
 @Service
 @AllArgsConstructor
@@ -22,8 +25,7 @@ import javax.annotation.PostConstruct;
 public class OrderService {
 
     private final OrderRepository orderRepository;
-//    @Lazy
-//    private final RestTemplate restTemplate;
+
 
     private final RabbitTemplate rabbitTemplate;
 
@@ -34,14 +36,19 @@ public class OrderService {
     @Lazy
     public ResponseEntity<TransactionResponse> doOrder(TransactionRequest transactionRequest){
         Order order = transactionRequest.getOrder();
-        PaymentRequest paymentRequest = transactionRequest.getPaymentRequest();
+        PaymentRequest paymentRequest = new PaymentRequest();
         orderRepository.save(order);
         paymentRequest.setOrderId(order.getId());
+        paymentRequest.setAmout(new BigDecimal(10.00));
+        paymentRequest.setPaymentStatus("falhando");
+        paymentRequest.setTransactionId("dsdasas");
 
-//        PaymentRequest paymentResponse =restTemplate.postForObject("url",paymentRequest, PaymentRequest.class);
 
-        rabbitTemplate.convertAndSend("myExchange", "test.order", "testando rabbit");
-        //escuta a resposta em uma outra fila para pegar o resultado
+        rabbitTemplate.convertAndSend("myExchange", "test.order"
+                , paymentRequest,m -> {
+                    m.getMessageProperties().getHeaders().remove("__TypeId__");
+                    return m;
+                });
 
         TransactionResponse transactionResponse = new TransactionResponse();
         transactionResponse.setOrder(order);
