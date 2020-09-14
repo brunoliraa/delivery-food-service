@@ -1,6 +1,5 @@
 package com.br.paymentservice.rabbitmq.consumer;
 
-import com.br.paymentservice.dto.PaymentRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
